@@ -18,6 +18,9 @@ export default class MySQL {
       user: process.env.USER,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
+      waitForConnections: true,
+      connectionLimit: 20,
+      queueLimit: 0,
     });
 
     this.conectarDB();
