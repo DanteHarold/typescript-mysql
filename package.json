@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/index.js",
+    "postinstall": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "html": "copyfiles --up 1 src/public/*.html dist",
-    "start": "node dist/index.js"
+    "html": "copyfiles --up 1 src/public/*.html dist"
   },
   "author": "",
   "license": "ISC",
