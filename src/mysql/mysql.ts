@@ -1,4 +1,5 @@
-import mysql = require("mysql2");
+import { Connection } from "mysql";
+import mysql = require("mysql2/promise");
 
 export default class MySQL {
   //* Patron singleton -> Crear unica instanciá
@@ -6,13 +7,13 @@ export default class MySQL {
   //Mismo tipo de la clase
   private static _instance: MySQL;
 
-  connection: mysql.Connection;
+  connection: mysql.Pool;
   conectado: boolean = false;
 
   constructor() {
     console.log("Clase Inicializada");
 
-    this.connection = mysql.createConnection({
+    this.connection = mysql.createPool({
       host: process.env.HOST,
       user: process.env.USER,
       password: process.env.PASSWORD,
@@ -26,29 +27,20 @@ export default class MySQL {
     return this._instance || (this._instance = new this());
   }
 
-  static ejecutarQuery(query: string, callback: Function) {
-    this.intance.connection.query(query, (err, results: Object[], fields) => {
-      if (err) {
-        console.log("Error en Query");
-        console.log(err);
-        return callback(err);
-      }
-      if (results.length === 0) {
-        callback("El Registro Solicitado no existe!");
-      } else {
-        callback(null, results);
-      }
-    });
+  static async ejecutarQuery(query: string) {
+    this.intance.connection.query(query);
   }
 
   private conectarDB() {
-    this.connection.connect((err) => {
-      if (err) {
-        console.log(err.message);
-        return;
-      }
-      this.conectado = true;
-      console.log("Base de Datos Online");
-    });
+    // this.connection.getConnection((err) => {
+    //   if (err) {
+    //     console.log(err.message);
+    //     return;
+    //   }
+    //   this.conectado = true;
+    //   console.log("Base de Datos Online");
+    // });
+
+    this.connection.getConnection();
   }
 }
