@@ -13,10 +13,10 @@ export default class MySQL {
     console.log("Clase Inicializada");
 
     this.connection = mysql.createConnection({
-      host: "localhost",
-      user: "node_user",
-      password: "123456",
-      database: "node_db",
+      host: process.env.HOST,
+      user: process.env.USER,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
     });
 
     this.conectarDB();
