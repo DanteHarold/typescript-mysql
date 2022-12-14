@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "tsc && npm run html",
     "html": "copyfiles --up 1 src/public/*.html dist"
   },
   "author": "",
